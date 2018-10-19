@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="BranchTool.Controls.RepositoryControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BranchTool.Controls"
+             xmlns:branchTool="clr-namespace:BranchTool"
+             mc:Ignorable="d" >
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="btvc"/>
+    </UserControl.Resources>
+
+    <Border Background="White" BorderThickness="1" BorderBrush="DarkGray">
+        <Grid VerticalAlignment="Center">
+            <TextBlock Margin="3"
+                       Visibility="{Binding ReadMode, Converter={StaticResource ResourceKey=btvc}}">
+                    <Hyperlink Click="Hyperlink_OnClick">
+                        <Run Text="{Binding SelectedRepository, UpdateSourceTrigger=PropertyChanged}" />
+                    </Hyperlink>
+            </TextBlock>
+            <ComboBox x:Name="ComboBox" Margin="3"
+                      ItemsSource="{Binding ComboBoxItems}"
+                      SelectedItem="{Binding SelectedRepository, UpdateSourceTrigger=PropertyChanged}"
+                      Visibility="{Binding ShowComboBox, Converter={StaticResource ResourceKey=btvc}}"
+                      DropDownClosed="ComboBox_OnDropDownClosed"
+                      SelectionChanged="ComboBox_OnSelectionChanged"/>
+        </Grid>
+    </Border>
+</UserControl>

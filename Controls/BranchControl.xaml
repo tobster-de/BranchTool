@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="BranchTool.Controls.BranchControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BranchTool.Controls"
+             xmlns:branchTool="clr-namespace:BranchTool"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="btvc"/>
+
+        <DataTemplate x:Key="branchItemTemplate" DataType="{x:Type branchTool:BranchItem}">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Margin="3,0,0,0"
+                           Visibility="{Binding ReadMode, Converter={StaticResource ResourceKey=btvc}}">
+                    <Hyperlink Click="Hyperlink_OnClick">
+                        <Run Text="{Binding Text}" />
+                    </Hyperlink>
+                </TextBlock>
+                <TextBox x:Name="TextBox" Text="{Binding Text}" Margin="3,0,0,0"
+                         Visibility="{Binding ShowTextBox, Converter={StaticResource ResourceKey=btvc}}"
+                         PreviewKeyDown="UIElement_OnPreviewKeyDown" 
+                         LostFocus="UIElement_OnLostFocus"/>
+                <ComboBox x:Name="ComboBox" Margin="3,0,0,0"
+                          ItemsSource="{Binding ComboBoxItems}" 
+                          SelectedItem="{Binding Text}"
+                          Visibility="{Binding ShowComboBox, Converter={StaticResource ResourceKey=btvc}}"
+                          SelectionChanged="Selector_OnSelected" 
+                          DropDownClosed="ComboBox_OnDropDownClosed"/>
+                <TextBlock Text="/" Margin="3,0,0,0" VerticalAlignment="Center"
+                           Visibility="{Binding ShowSlash, Converter={StaticResource ResourceKey=btvc}}"/>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Border Background="White" BorderThickness="1" BorderBrush="DarkGray">
+        <ItemsControl ItemsSource="{Binding BranchItems}"
+                      ItemTemplate="{StaticResource branchItemTemplate}"
+                      IsTabStop="False">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Border>
+</UserControl>

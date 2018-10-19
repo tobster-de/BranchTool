@@ -1,0 +1,53 @@
+﻿<Window x:Class="BranchTool.StashWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BranchTool"
+        xmlns:controls="clr-namespace:BranchTool.Controls"
+        mc:Ignorable="d"
+        Title="Stashes" 
+        Width="500" ResizeMode="CanResize" MinHeight="130" MinWidth="300" SizeToContent="Height"
+        WindowStartupLocation="CenterScreen" Icon="git-branch.ico"
+        Closing="StashWindow_OnClosing"
+        SizeChanged="StashWindow_OnSizeChanged"
+        ContentRendered="StashWindow_OnContentRendered">
+    <Grid Height="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <controls:RepositoryControl x:Name="RepositoryControl" Margin="3" Grid.Row="0" Height="28" Grid.ColumnSpan="2"
+                                    ToolTip="The repository to work with"/>
+        <TextBox x:Name="StashDesc" Grid.Row="1" Margin="3" />
+        <Button Content="Push" Width="70" Margin="3" Grid.Row="1" Grid.Column="1"
+                Click="PushStash" ToolTip="Push current changes onto the stash"/>
+
+        <TextBox x:Name="RecentStashDesc" IsReadOnly="True" Grid.Row="2" Margin="3" />
+        <Button x:Name="PopButton" Content="Pop" Width="70" Margin="3" Grid.Row="2" Grid.Column="1" 
+                Click="PopStash" ToolTip="Pop the most recent stash onto the current branch"/>
+
+        <controls:BranchControl x:Name="BranchControl" Margin="3" Grid.Row="3" Height="28"
+                                ToolTip="Name of the branch to create"/>
+        <Button x:Name="BranchButton"  Content="Branch" Width="70" Margin="3" Grid.Row="3" Grid.Column="1" 
+                VerticalAlignment="Bottom"
+                Click="BranchStash" ToolTip="Create a branch with the changes of the most recent stash"/>
+
+        <Button x:Name="ClearButton"  Content="Clear" Width="70" Margin="3" Grid.Row="4" Grid.Column="1" 
+                Click="ClearStash" ToolTip="Clears all stashes"/>
+
+        <TextBox IsReadOnly="True" x:Name="Output" Grid.Row="5" Grid.ColumnSpan="2" Margin="3" 
+                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                 MinHeight="120" MaxHeight="400"
+                 Visibility="Collapsed" ToolTip="Output of git command line processor"/>
+    </Grid>
+</Window>
